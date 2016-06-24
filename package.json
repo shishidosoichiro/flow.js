@@ -1,5 +1,5 @@
 {
-  "name": "flow.js",
+  "name": "flow",
   "version": "0.0.1",
   "description": "Simple flow control function for both sync and async function.",
   "main": "index.js",
