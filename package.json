@@ -1,0 +1,34 @@
+{
+  "name": "flow.js",
+  "version": "0.0.1",
+  "description": "Simple flow control function for both sync and async function.",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha",
+    "cover": "istanbul cover _mocha",
+    "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shishidosoichiro/flow.js.git"
+  },
+  "keywords": [
+    "flow",
+    "lodash",
+    "async"
+  ],
+  "author": "Soichiro Shishido",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shishidosoichiro/flow.js/issues"
+  },
+  "homepage": "https://github.com/shishidosoichiro/flow.js#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "istanbul": "^0.4.4",
+    "mocha": "^2.5.3"
+  }
+}
