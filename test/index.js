@@ -17,6 +17,9 @@ var twiceAsync = function(n){
 		}, 10);
 	});
 };
+var reject = function(){
+	return Promise.reject('rejected.')
+}
 
 describe('flow', function(){
 
@@ -26,7 +29,7 @@ describe('flow', function(){
 	});
 
 	it('should synthesize functions including async functions.', function(done){
-		var plus1TwicePlus1 = flow(
+		var calc = flow(
 			plus1,
 			twiceAsync,
 			plus1,
@@ -34,9 +37,27 @@ describe('flow', function(){
 			plus1,
 			plus1
 		);
-		plus1TwicePlus1(4).then(function(answer){
+		calc(4).then(function(answer){
 			answer.should.equal(24)
 			done();
 		});
 	});
+	it('should synthesize functions including rejecting functions.', function(done){
+		var failToCalc = flow(
+			plus1,
+			twiceAsync,
+			plus1,
+			twiceAsync,
+			reject,
+			plus1
+		);
+		failToCalc(4).then(function(answer){
+			done('error');
+		})
+		.catch(function(err){
+			err.should.equal('rejected.');
+			done();
+		});
+	});
+
 });
