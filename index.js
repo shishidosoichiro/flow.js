@@ -11,11 +11,15 @@ var flow = function(functions){
 	if (arguments.length > 1 && !(functions instanceof Array)) functions = slice(arguments);
 	functions = functions.map(functionalize);
 	return function(arg){
-		var that = this;
 		return functions.reduce(function(arg, f){
-			if (arg instanceof Promise) return arg.then(f.bind(that));
-			return f.call(that, arg);
-		}, arg);
+			f = f.bind(this);
+			var execute = function(arg){
+				if (arg === undefined) return;
+				return f(arg);
+			};
+			if (arg instanceof Promise) return arg.then(execute);
+			return execute(arg);
+		}.bind(this), arg);
 	};
 };
 

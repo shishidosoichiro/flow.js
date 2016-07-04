@@ -10,6 +10,13 @@ var plus1 = function(n){
 	return n + 1;
 };
 
+var plus1Async = function(n){
+	return new Promise(function(resolve, reject){
+		setTimeout(function(){
+			resolve(n + 1);
+		}, 10);
+	});
+};
 var twiceAsync = function(n){
 	return new Promise(function(resolve, reject){
 		setTimeout(function(){
@@ -19,6 +26,10 @@ var twiceAsync = function(n){
 };
 var reject = function(){
 	return Promise.reject('rejected.')
+}
+var omitEven = function(n){
+	if (n % 2 == 0) return n;
+	return undefined;
 }
 
 describe('flow', function(){
@@ -42,6 +53,7 @@ describe('flow', function(){
 			done();
 		});
 	});
+
 	it('should synthesize functions including rejecting functions.', function(done){
 		var failToCalc = flow(
 			plus1,
@@ -59,5 +71,32 @@ describe('flow', function(){
 			done();
 		});
 	});
-
+	it('should cancel rest functions and return undefined, if a function return undefined.', function(done){
+		var cancel = flow(
+			plus1,
+			plus1Async,
+			omitEven,
+			twiceAsync,
+			plus1,
+			plus1,
+			plus1
+		);
+		cancel(4)
+		.then(function(answer){
+			should.equal(answer, 15);
+			return cancel(5);
+		})
+		.then(function(answer){
+			should.equal(answer, undefined);
+			return cancel(6);
+		})
+		.then(function(answer){
+			should.equal(answer, 19);
+			return cancel(7);
+		})
+		.then(function(answer){
+			should.equal(answer, undefined);
+			done();
+		})
+	});
 });
