@@ -8,7 +8,7 @@ var functionalize = function(src){
 };
 
 var flow = function(functions){
-	if (arguments.length > 1 && !(functions instanceof Array)) functions = slice(arguments);
+	if (!(arguments.length === 1 && (functions instanceof Array))) functions = slice(arguments);
 	functions = functions.map(functionalize);
 	return function(arg){
 		var that = this;
