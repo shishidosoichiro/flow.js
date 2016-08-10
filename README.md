@@ -3,12 +3,12 @@
 [![Build Status](https://travis-ci.org/shishidosoichiro/flow.js.svg?branch=master)](https://travis-ci.org/shishidosoichiro/flow.js)
 [![Coverage Status](https://coveralls.io/repos/github/shishidosoichiro/flow.js/badge.svg?branch=master)](https://coveralls.io/github/shishidosoichiro/flow.js?branch=master)
 
-Creates a function that returns 
+Creates a function that is comprised of functions that returns value or Promise.
 
 ```js
 var yamlToJson = flow(YAML.parse, JSON.stringify)
 yamlToJson('name: tom')
-// -> {"name": "tom"}
+// -> '{"name": "tom"}'
 
 var postFile = flow(fs.readFileSync, postToHttpServerReturnPromise)
 
@@ -35,8 +35,3 @@ postFile('book/1q84.epub')
 ```sh
 npm install https://github.com/shishidosoichiro/flow.js
 ```
-
-```js
-var flow = require('flow');
-```
-
